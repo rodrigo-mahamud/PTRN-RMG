@@ -1,0 +1,373 @@
+/* Font Face */
+@font-face {
+   font-family: "GeistVF";
+   src: url("./assets/fonts/GeistVF.woff2") format("woff2");
+   font-weight: 100 1000;
+}
+
+/* Global Styles */
+* {
+   box-sizing: border-box;
+}
+
+html,
+body {
+   font-family: "GeistVF", Courier, monospace;
+   padding: 0;
+   margin: 0;
+   background-color: rgb(236, 243, 255);
+}
+
+/* Typography */
+h1 {
+   font-size: 1.5rem;
+   font-weight: 600;
+   margin: 0;
+}
+
+h2 {
+   font-size: 0.875rem;
+   font-weight: 400;
+   line-height: 1.25rem;
+   color: #71717a;
+   margin-top: 0.5rem;
+   margin-bottom: 0;
+   text-wrap: pretty;
+}
+
+/* Layout Components */
+.container {
+   display: flex;
+   flex-direction: column;
+   max-width: 1300px;
+   padding: 0 5vw;
+   margin: 0 auto;
+   position: relative;
+}
+
+.exercise-container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+.range-selector {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
+   height: 100vh;
+}
+
+.home-container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
+   height: 100vh;
+}
+
+.flex-col {
+   display: flex;
+   flex-direction: column;
+}
+
+/* Card Styles */
+.card {
+   display: flex;
+   flex-direction: column;
+   width: 35vw;
+   padding: 1.5rem;
+   background-color: white;
+   border: solid 1px #dbdcea;
+   border-radius: 0.35rem;
+   box-shadow: 0px 5px 7px 0px rgba(124, 131, 168, 0.2);
+}
+
+/* Button Styles */
+button {
+   padding: 0.3rem 1rem;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+.button-container {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   gap: 1rem;
+   margin-top: 1.5rem;
+}
+
+/* Back Button Styles */
+.backContainer {
+   display: flex;
+   justify-content: start;
+   width: 35vw;
+   margin-bottom: 1rem;
+}
+
+.back {
+   display: flex;
+   align-items: center;
+   gap: 0.25rem;
+   padding: 0.75rem 1.5rem;
+   color: #000000b0;
+   font-weight: 500;
+   background-color: #fff;
+   border: solid 1px #dbdcea;
+   border-radius: 0.3rem;
+   box-shadow: 0px 5px 7px 0px rgba(124, 131, 168, 0.1);
+   text-decoration: none;
+   transition: background-color 0.3s ease-in-out;
+}
+
+.back:hover {
+   color: #000000;
+   background-color: rgb(246, 246, 246);
+   border: solid 1px #dbdcea;
+   border-radius: 0.3rem;
+   box-shadow: 0px 5px 7px 0px rgba(124, 131, 168, 0.1);
+   transition: background-color 0.3s ease-in-out;
+}
+
+.back:hover svg {
+   transform: translateX(-0.25rem);
+   transition: transform 0.3s ease-in-out;
+}
+
+.back svg {
+   transition: transform 0.3s ease-in-out;
+}
+
+/* Range Styles */
+.range {
+   margin-top: 1.5rem;
+}
+
+.rangeFlex {
+   display: flex;
+   align-items: center;
+   height: 3rem;
+   gap: 30px;
+}
+
+.range-wrapper {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.range .range-wrapper .label {
+   user-select: none;
+}
+
+/* Bar Styles */
+.bar-wrapper {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   height: 100%;
+   margin: auto;
+   position: relative;
+}
+.bar {
+   width: 100%;
+   height: 1rem;
+   border-radius: 0.25rem;
+   overflow: hidden;
+   position: relative;
+   transition: height 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6) 0.65s;
+}
+
+/* Dot Styles */
+.dotContainer {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   height: inherit;
+   position: absolute;
+}
+
+.dot {
+   width: 2rem;
+   height: 2rem;
+   background: rgb(255, 255, 255);
+   border-radius: 24px;
+   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
+   z-index: 99;
+   transform: scale(1);
+   transition: transform ease-in-out 0.2s, box-shadow ease-in-out 0.2s, border-radius ease-in-out 0.2s;
+}
+
+.dot:hover {
+   cursor: grabbing;
+   border-radius: 0.3rem;
+   background: #f7f8ff;
+   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
+   transform: scale(1.1);
+   transition: transform ease-in-out 0.2s, box-shadow ease-in-out 0.2s, border-radius ease-in-out 0.2s;
+}
+
+/* Tooltip Styles */
+
+.tooltipDot {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   position: absolute;
+   bottom: 0%;
+   margin-left: -1rem;
+   margin-bottom: 0.5rem;
+   transition: var(--transition);
+}
+
+.tooltip-input,
+.tooltip {
+   width: 3rem;
+   padding: 5px 0;
+   font-size: 0.75rem;
+   color: #616161;
+   text-align: center;
+   background: white;
+   border-radius: 0.3rem;
+   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
+   margin: 0;
+}
+
+.tooltipDot:hover ~ .bar {
+   height: 3.75rem;
+   transition: height 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6) 0.1s;
+}
+
+.tooltipDot:hover ~ .tracksContainer > .tracks {
+   height: 80%;
+   margin: auto 0;
+   border: 1px dashed hsla(0, 0%, 100%, 1);
+   transition: all 0.3s ease-in-out;
+}
+
+/* Tracks Styles */
+.tracks {
+   height: 100%;
+   margin: auto 0;
+   background-color: transparent;
+   border: 1px dashed hsla(0, 0%, 100%, 0.63);
+   transition: all 0.3s ease-in-out 0.2s;
+}
+
+.tracks:first-child,
+.tracks:last-child {
+   opacity: 0;
+}
+
+.tracksContainer {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   z-index: 9;
+}
+
+/* Skeleton Styles */
+.skeleton-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+   gap: 1.5rem;
+   margin-top: 1.5rem;
+   position: relative;
+}
+
+.skeleton-placeholder-big {
+   width: 100%;
+   height: 2.5rem;
+   background: linear-gradient(90deg, #eeeeee 0px, #f8f8f8 100px, #eeeeee 200px);
+   background-size: 350px;
+   border-radius: 0.3rem;
+   animation: animation 2s infinite linear;
+}
+
+.skeleton-placeholder-small {
+   width: 4.5rem;
+   height: 1.5rem;
+   background: linear-gradient(90deg, #eeeeee 0px, #f8f8f8 40px, #eeeeee 80px);
+   background-size: 350px;
+   border-radius: 0.3rem;
+   animation: animation 2.5s infinite linear;
+}
+
+.skeleton-container-small {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   gap: 20px;
+}
+.errorBoundary {
+   padding: 1rem;
+   color: red;
+   background: #ff00000f;
+   margin-top: 1rem;
+   border-radius: 0.3rem;
+}
+
+@keyframes animation {
+   0% {
+      background-position: -26vw;
+   }
+   100% {
+      background-position: 26vw;
+   }
+}
+
+/* Selected Range Styles */
+.selectedRangeContainer {
+   display: flex;
+   justify-content: center;
+   gap: 20px;
+}
+
+/* Labels Styles */
+.labelsContainer {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+   margin: 0 auto 1rem auto;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+   .bar-wrapper {
+      width: 80vw;
+   }
+}
+.inputContainer {
+   display: flex;
+   width: 100%;
+   margin: 1rem auto 0 auto;
+   justify-content: space-between;
+}
+.inputContainer input {
+   padding: 0.5rem;
+   border: solid 1px #dbdcea;
+   font-size: 1rem;
+   color: #383838;
+   text-align: center;
+   background: white;
+   border-radius: 0.3rem;
+}
+.inputContainer input:focus-visible {
+   outline: solid 1px #3d5ef8;
+}
+input:disabled {
+   cursor: default;
+   background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3));
+   color: light-dark(rgb(84, 84, 84), rgb(170, 170, 170));
+   border-color: rgba(118, 118, 118, 0.3);
+}
