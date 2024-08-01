@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavDock } from "@/components/NavDock";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
    return (
       <html lang='es'>
          <body className={inter.className}>
-            {children}
-            <NavDock></NavDock>
+            <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+               {children}
+               <NavDock></NavDock>
+            </ThemeProvider>
          </body>
       </html>
    );

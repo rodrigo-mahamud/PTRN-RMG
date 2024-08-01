@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Dock, DockIcon } from "@/components/magicui/dock";
+import { ToggleTheme } from "./ToggleTheme";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -21,6 +22,7 @@ export function NavDock() {
                <Icons.whatsapp className='size-6' />
             </DockIcon>
          </Dock>
+         <ToggleTheme></ToggleTheme>
       </div>
    );
 }

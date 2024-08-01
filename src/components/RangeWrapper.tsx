@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import Range from "./ui/range";
-import { getDataWithSuspense } from "../utils/getData";
+import { getDataWithSuspense } from "../lib/getData";
 import { RangeWrapperProps, RangeData } from "../types";
 
 const RangeWrapper: React.FC<RangeWrapperProps> = React.memo(({ isFixed }) => {
