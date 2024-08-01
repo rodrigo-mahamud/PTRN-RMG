@@ -1,100 +1,36 @@
-# Componentes de Selector de Rango Personalizados
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Visión General
+## Getting Started
 
-Este proyecto implementa componentes de selector de rango personalizados en React, ofreciendo dos variantes:
+First, run the development server:
 
-1. Un selector de rango numérico flexible y ajustable
-2. Un selector de rango fijo con valores predefinidos
-
-Estos componentes proporcionan una forma interactiva y visualmente atractiva para que los usuarios seleccionen valores o rangos, con características como actualizaciones dinámicas, integración de API y manejo de errores.
-
-## Características
-
--  **Dos Tipos de Selector de Rango**:
-   -  Rango Normal: Permite la selección dentro de un rango continuo
-   -  Rango Fijo: Ofrece selección de valores predefinidos
--  **Integración de API**: Obtiene datos de rango de APIs externas
--  **UI Interactiva**:
-   -  Puntos arrastrables para la selección de rango
-   -  Retroalimentación visual con barras de colores
-   -  Etiquetas clickeables para una fácil selección de valores
--  **Campos de Entrada**: Para entrada numérica precisa (en modo de Rango Normal)
--  **Diseño Responsivo**: Se adapta a diferentes tamaños de pantalla
--  **Manejo de Errores**: Muestra errores de manera elegante con Error Boundary
--  **Estado de Carga**: Loader de esqueleto mientras se obtienen los datos
--  **Caché**: Implementa un mecanismo de caché simple para llamadas a la API
-
-## Estructura del Proyecto
-
-```
-src/
-├── components/
-│   ├── ui/
-│   │   ├── Range.tsx
-│   │   ├── Dot.tsx
-│   │   ├── Bar.tsx
-│   │   └── Label.tsx
-│   ├── ErrorBoundary.tsx
-│   └── RangeWrapper.tsx
-├── hooks/
-├── pages/
-│   ├── Index.tsx
-│   ├── Exercise1.tsx
-│   └── Exercise2.tsx
-├── types/
-├── utils/
-│   └── getData.ts
-├── App.tsx
-└── main.tsx
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Componentes Clave
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
--  `Range.tsx`: Componente principal para ambos tipos de rango
--  `RangeWrapper.tsx`: Maneja la obtención de datos y proporciona props a Range
--  `Dot.tsx`: Punto interactivo para la selección de rango
--  `Bar.tsx`: Representación visual del rango seleccionado
--  `getData.ts`: Maneja llamadas a la API con caché
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Configuración y Ejecución
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-1. Clonar el repositorio
-   ```
-   git clone [URL_DEL_REPOSITORIO]
-   ```
-2. Instalar dependencias
-   ```
-   npm install
-   ```
-3. Configurar variables de entorno:
-   -  `VITE_API_NORMAL_URL`: URL para la API de rango normal
-   -  `VITE_API_FIXED_URL`: URL para la API de rango fijo
-4. Ejecutar el servidor de desarrollo
-   ```
-   npm run dev
-   ```
+## Learn More
 
-## Uso
+To learn more about Next.js, take a look at the following resources:
 
-Navega a diferentes páginas para ver los selectores de rango en acción:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
--  `/`: Página de inicio con enlaces a ejemplos
--  `/exercise1`: Selector de rango normal
--  `/exercise2`: Selector de rango fijo
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Tecnologías Utilizadas
+## Deploy on Vercel
 
--  React
--  TypeScript
--  React Router
--  Vite (para construcción y desarrollo)
--  Tailwind CSS (para estilos)
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Contribución
-
-¡Las contribuciones son bienvenidas! Por favor, siéntete libre de enviar un Pull Request.
-
-## Licencia
-
-Este proyecto es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -3,9 +3,9 @@ import Tracks from "./tracks";
 import Dot from "./dot";
 import Bar from "./bar";
 import Label from "./label";
-import { RangeProps, DotRef, SelectedRange } from "../../types";
-import { useValueToPercent } from "../../hooks/useValueToPercent";
-import { usePercentToValue } from "../../hooks/usePercentToValue";
+import { RangeProps, DotRef, SelectedRange } from "@/types";
+import { useValueToPercent } from "@/hooks/useValueToPercent";
+import { usePercentToValue } from "@/hooks/usePercentToValue";
 
 const Range: React.FC<RangeProps> = React.memo(
    ({
