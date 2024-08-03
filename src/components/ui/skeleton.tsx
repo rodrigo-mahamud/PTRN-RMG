@@ -1,15 +1,15 @@
-export default function Skeleton() {
-   return (
-      <div className='skeleton-container'>
-         <div className='skeleton-container-small'>
-            <div className='skeleton-placeholder-small'></div>
-            <div className='skeleton-placeholder-small'></div>
-         </div>
-         <div className='skeleton-placeholder-big'></div>
-         <div className='skeleton-container-small'>
-            <div className='skeleton-placeholder-small'></div>
-            <div className='skeleton-placeholder-small'></div>
-         </div>
-      </div>
-   );
+import { cn } from "@/lib/utils"
+
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("animate-pulse rounded-md bg-muted", className)}
+      {...props}
+    />
+  )
 }
+
+export { Skeleton }
