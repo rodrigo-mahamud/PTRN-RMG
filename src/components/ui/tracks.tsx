@@ -1,4 +1,4 @@
-import { TracksProps } from "../../types";
+import { TracksProps } from "@/../types";
 
 const Tracks: React.FC<TracksProps> = ({ values }) => {
    return (

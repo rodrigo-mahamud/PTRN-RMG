@@ -1,5 +1,5 @@
 import React from "react";
-import { LabelProps } from "../../types";
+import { LabelProps } from "@/../types";
 
 const Label: React.FC<LabelProps> = React.memo(({ onClick, text, ...rest }) => {
    return (

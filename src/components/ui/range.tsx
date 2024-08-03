@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef, useCallback, useMemo } from "react";
 import Tracks from "./tracks";
 import Dot from "./dot";

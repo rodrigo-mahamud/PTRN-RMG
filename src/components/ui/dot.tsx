@@ -1,5 +1,6 @@
+"use client";
 import React, { useState, useRef, forwardRef, useImperativeHandle, useCallback } from "react";
-import { DotProps, DotRef } from "../../types";
+import { DotProps, DotRef } from "@/types";
 
 const Dot = forwardRef<DotRef, DotProps>(function Dot({ value, onChange, onRelease, className, ...rest }, ref) {
    const [dragging, setDragging] = useState(false);

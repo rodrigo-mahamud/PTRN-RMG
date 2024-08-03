@@ -13,19 +13,18 @@ export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export function NavDock() {
    return (
-      <div className='fixed flex bottom-8 w-full flex-col items-center justify-center overflow-hidden md:shadow-xl'>
+      <div className='fixed flex bottom-8 w-full flex-col items-center justify-center overflow-hidden'>
          <TooltipProvider>
             <Dock direction='middle'>
                {NavData.navbar.map((item) => {
                   const IconComponent = (Icons as any)[item.icon] || Icons.IconQuestionMark;
-                  console.log(item);
 
                   return (
                      <DockIcon key={item.label}>
                         <Tooltip>
                            <TooltipTrigger asChild>
                               <Link href={item.href} className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "size-12 rounded-full")}>
-                                 <IconComponent className='stroke-1.5 size-5' />
+                                 <IconComponent className='h-[1.3rem] w-[1.3rem]' />
                               </Link>
                            </TooltipTrigger>
                            <TooltipContent>

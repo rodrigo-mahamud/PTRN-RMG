@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { BarProps } from "../../types";
+import { BarProps } from "@/../types";
 
 const Bar = forwardRef<HTMLDivElement, BarProps>(({ selectedRange, selectedColor, unselectedColor, className, ...rest }, ref) => {
    return (

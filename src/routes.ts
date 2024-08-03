@@ -1,7 +1,8 @@
 const NavData = {
    navbar: [
-      { href: "#", icon: "IconBraces", label: "Ejercicio 1" },
-      { href: "#", icon: "IconBrackets", label: "Ejercicio 2" },
+      { href: "/", icon: "IconHome", label: "Inicio" },
+      { href: "/exercise1", icon: "IconRosetteNumber1", label: "Ejercicio 1" },
+      { href: "/exercise2", icon: "IconRosetteNumber2", label: "Ejercicio 2" },
    ],
 };
 export default NavData;
