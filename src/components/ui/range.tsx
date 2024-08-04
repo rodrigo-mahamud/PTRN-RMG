@@ -7,6 +7,7 @@ import Label from "./label";
 import { RangeProps, DotRef, SelectedRange } from "@/types";
 import { useValueToPercent } from "@/hooks/useValueToPercent";
 import { usePercentToValue } from "@/hooks/usePercentToValue";
+import { Input } from "@/components/ui/input";
 
 const Range: React.FC<RangeProps> = React.memo(
    ({
@@ -15,7 +16,7 @@ const Range: React.FC<RangeProps> = React.memo(
       defaultValue,
       rangeValues,
       clickOnLabel,
-      isFixedRange,
+      isFixed,
       minDistance = 0,
       selectedColor = "#3b82f6",
       unselectedColor = "#dae3f4",
@@ -35,12 +36,12 @@ const Range: React.FC<RangeProps> = React.memo(
 
       const getNearestFixedValue = useCallback(
          (percent: number) => {
-            if (!isFixedRange) return percent;
+            if (!isFixed) return percent;
             const value = percentToValue(percent);
             const nearestValue = rangeValues!.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
             return valueToPercent(nearestValue);
          },
-         [isFixedRange, rangeValues, percentToValue, valueToPercent]
+         [isFixed, rangeValues, percentToValue, valueToPercent]
       );
 
       const updateRange = useCallback(
@@ -99,51 +100,70 @@ const Range: React.FC<RangeProps> = React.memo(
          dot2Ref.current?.update(end);
       }, [min, max, defaultValue, valueToPercent]);
 
-      const memoizedTracks = useMemo(
-         () => isFixedRange && <Tracks values={rangeValues!.map(valueToPercent)} />,
-         [isFixedRange, rangeValues, valueToPercent]
-      );
+      const memoizedTracks = useMemo(() => isFixed && <Tracks values={rangeValues!.map(valueToPercent)} />, [isFixed, rangeValues, valueToPercent]);
 
       return (
-         <div {...rest} className='range'>
-            <div className='labelsContainer'>
-               <Label text={min} onClick={!clickOnLabel || isFixedRange ? undefined : () => handleDotChange(1)(0)} data-testid='range-label-min' />
-               <Label text={max} onClick={!clickOnLabel || isFixedRange ? undefined : () => handleDotChange(2)(100)} data-testid='range-label-max' />
-            </div>
-            <div className='range-wrapper'>
-               <div className='rangeFlex'>
-                  <div className='bar-wrapper'>
-                     <Dot
-                        value={selectedRange.start}
-                        onChange={handleDotChange(1)}
-                        onRelease={handleDotRelease(1)}
-                        ref={dot1Ref}
-                        data-testid='dot1'
-                     />
-                     <Dot value={selectedRange.end} onChange={handleDotChange(2)} onRelease={handleDotRelease(2)} ref={dot2Ref} data-testid='dot2' />
-                     <Bar selectedRange={selectedRange} selectedColor={selectedColor} unselectedColor={unselectedColor} />
-                     {memoizedTracks}
+         <div {...rest}>
+            <div className='flex flex-col gap-2 w-full'>
+               <div className='flex items-center gap-8'>
+                  <div className='size-full flex m-auto relative items-center group'>
+                     <div className='flex w-full'>
+                        <Label
+                           className='w-20 flex justify-center text-white/50 group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
+                           text={min}
+                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(1)(0)}
+                           data-testid='range-label-min'
+                        />
+                        <div className='h-full w-full relative z-40 '>
+                           <div className='absolute w-full h-full flex items-center'>
+                              <Dot
+                                 value={selectedRange.start}
+                                 onChange={handleDotChange(1)}
+                                 onRelease={handleDotRelease(1)}
+                                 ref={dot1Ref}
+                                 data-testid='dot1'
+                              />
+                              <Dot
+                                 value={selectedRange.end}
+                                 onChange={handleDotChange(2)}
+                                 onRelease={handleDotRelease(2)}
+                                 ref={dot2Ref}
+                                 data-testid='dot2'
+                              />
+                           </div>
+                           <Bar selectedRange={selectedRange} selectedColor={selectedColor} unselectedColor={unselectedColor} />
+                           {memoizedTracks}
+                        </div>
+                        <Label
+                           className='w-20 flex justify-center text-white/50 group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
+                           text={max}
+                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(2)(100)}
+                           data-testid='range-label-max'
+                        />
+                     </div>
                   </div>
                </div>
             </div>
 
             <div className='inputContainer'>
-               <input
+               <Input
                   type='number'
+                  className='w-20 text-xs '
                   data-testid='input1'
-                  disabled={isFixedRange ? true : false}
+                  disabled={isFixed ? true : false}
                   min={min}
                   max={max}
-                  value={percentToValue(selectedRange.start).toFixed(isFixedRange ? 2 : 0)}
+                  value={percentToValue(selectedRange.start).toFixed(isFixed ? 2 : 0)}
                   onChange={(e) => handleInputChange(1)(Number(e.target.value))}
                />
-               <input
+               <Input
                   type='number'
+                  className='w-20 text-xs '
                   data-testid='input2'
-                  disabled={isFixedRange ? true : false}
+                  disabled={isFixed ? true : false}
                   min={min}
                   max={max}
-                  value={percentToValue(selectedRange.end).toFixed(isFixedRange ? 2 : 0)}
+                  value={percentToValue(selectedRange.end).toFixed(isFixed ? 2 : 0)}
                   onChange={(e) => handleInputChange(2)(Number(e.target.value))}
                />
             </div>

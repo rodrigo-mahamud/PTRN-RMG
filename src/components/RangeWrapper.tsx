@@ -1,7 +1,9 @@
 import Range from "./ui/range";
 import { getRangeData } from "@/lib/getData";
 
-export default async function RangeWrapper({ isFixed }) {
+import { RangeProps } from "@/types";
+
+export default async function RangeWrapper({ isFixed }: RangeProps) {
    const data = await getRangeData(isFixed);
    return (
       <Range
@@ -10,9 +12,9 @@ export default async function RangeWrapper({ isFixed }) {
          rangeValues={isFixed ? data.range : undefined}
          defaultValue={isFixed ? data.default : undefined}
          clickOnLabel
-         isFixedRange={isFixed}
+         isFixed={isFixed}
          minDistance={5}
-         selectedColor='#3d5ef8'
+         selectedColor='#6d28d9'
          unselectedColor='#dae3f4'
       />
    );

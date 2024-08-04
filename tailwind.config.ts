@@ -13,6 +13,10 @@ const config = {
          },
       },
       extend: {
+         transitionProperty: {
+            spacing: "width, height, margin, padding",
+            custom: "width, height, margin, padding, opacity",
+         },
          colors: {
             border: "hsl(var(--border))",
             input: "hsl(var(--input))",

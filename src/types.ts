@@ -3,7 +3,8 @@ import { ReactNode } from "react";
 export interface RangeProps {
    min?: number;
    max?: number;
-   isFixedRange: boolean;
+
+   isFixed: boolean;
    defaultValue?: { min: number; max: number };
    rangeValues?: number[];
    clickOnLabel?: boolean;
