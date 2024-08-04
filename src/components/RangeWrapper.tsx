@@ -15,7 +15,6 @@ export default async function RangeWrapper({ isFixed }: RangeProps) {
          isFixed={isFixed}
          minDistance={5}
          selectedColor='#6d28d9'
-         unselectedColor='#dae3f4'
       />
    );
 }

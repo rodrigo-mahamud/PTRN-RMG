@@ -25,7 +25,6 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
       isFixed,
       minDistance = 0,
       selectedColor = "#3b82f6",
-      unselectedColor = "#dae3f4",
       onChange,
       onRangeChange,
       ...rest
@@ -151,7 +150,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                   <div className='size-full flex m-auto relative items-center group'>
                      <div className='flex w-full'>
                         <Label
-                           className='w-20 flex justify-center text-white/50 group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
+                           className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
                            text={min}
                            onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(1)(0)}
                            data-testid='range-label-min'
@@ -173,11 +172,11 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                                  data-testid='dot2'
                               />
                            </div>
-                           <Bar selectedRange={selectedRange} selectedColor={selectedColor} unselectedColor={unselectedColor} />
+                           <Bar selectedRange={selectedRange} selectedColor={selectedColor} />
                            {memoizedTracks}
                         </div>
                         <Label
-                           className='w-20 flex justify-center text-white/50 group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
+                           className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
                            text={max}
                            onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(2)(100)}
                            data-testid='range-label-max'

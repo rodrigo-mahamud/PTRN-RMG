@@ -10,7 +10,6 @@ export interface RangeProps {
    clickOnLabel?: boolean;
    minDistance?: number;
    selectedColor?: string;
-   unselectedColor?: string;
    onChange?: (start: number, end: number) => void;
 }
 
@@ -37,7 +36,6 @@ export interface DotProps {
 export interface BarProps {
    selectedRange: SelectedRange;
    selectedColor: string;
-   unselectedColor: string;
 }
 
 export interface LabelProps {
@@ -57,7 +55,6 @@ export interface DotRef {
 export interface BarProps {
    selectedRange: { start: number; end: number };
    selectedColor: string;
-   unselectedColor: string;
    className?: string;
 }
 export interface ErrorBoundaryProps {
