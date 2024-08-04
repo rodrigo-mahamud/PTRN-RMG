@@ -6,7 +6,7 @@ export async function getRangeData(isFixed: boolean): Promise<RangeData> {
    if (!url) {
       throw new Error("API URL is not defined in environment variables");
    }
-
+   await new Promise((resolve) => setTimeout(resolve, 2000));
    try {
       const response = await fetch(url, {
          method: "GET",

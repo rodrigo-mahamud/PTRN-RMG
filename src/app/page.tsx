@@ -15,7 +15,7 @@ export default function IndexPage() {
             maxOpacity={0.1}
             duration={3}
             repeatDelay={1}
-            className={cn("[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]", "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12")}
+            className={cn("[mask-image:radial-gradient(750px_circle_at_center,white,transparent)]", "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12")}
          />
       </main>
    );

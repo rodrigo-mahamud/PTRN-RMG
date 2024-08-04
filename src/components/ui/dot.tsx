@@ -59,7 +59,7 @@ const Dot = forwardRef<DotRef, DotProps>(function Dot({ value, onChange, onRelea
       <div
          {...rest}
          ref={dotRef}
-         className=' h-8 w-4 absolute z-50 bg-accent rounded-full -ml-2 first: border hover:w-8 hover:-ml-4 transition-spacing hover:scale-110 border-white/10 shadow-[0_1px_6px_#00000026]'
+         className=' h-8 w-4 absolute z-50 bg-[#191919] rounded-full -ml-2 first: border hover:w-8 hover:-ml-4 transition-spacing hover:scale-110 border-white/10 shadow-[0_1px_6px_#00000026]'
          style={{ cursor: dragging ? "grabbing" : "grab" }}
          onMouseDown={handleMouseDown}
       />

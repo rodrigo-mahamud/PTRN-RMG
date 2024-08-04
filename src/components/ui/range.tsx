@@ -187,7 +187,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                </div>
             </div>
 
-            <div className='inputContainer'>
+            <div className='flex w-full mt-4 justify-between'>
                <Input
                   type='number'
                   className='w-20 text-xs text-center pl-0 pr-8'

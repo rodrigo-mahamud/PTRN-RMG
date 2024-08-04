@@ -1,39 +1,43 @@
 import React, { Suspense } from "react";
 import RangeWrapper from "@/components/RangeWrapper";
-import Skeleton from "@/components/ui/skeleton";
-import ErrorBoundary from "@/components/ErrorBoundary";
-import Card from "@/components/Card";
-import { IconArrowNarrowLeft } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
-
-const Exercise2: React.FC = () => {
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Container from "@/components/ui/container";
+import { SkeletonCard } from "@/components/SkeletonCard";
+import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
+import { cn } from "@/lib/utils";
+const page: React.FC = () => {
    return (
-      <div className='exercise-container'>
-         <div className='backContainer'>
-            <Link className='back' to='/'>
-               <IconArrowNarrowLeft size={20} stroke={1.5}></IconArrowNarrowLeft>
-               Inicio
-            </Link>
-         </div>
-         <Card>
-            <div>
-               <h1>Rangos Fijos</h1>
-               <h2>
-                  Slider interactivo para seleccionar valores discretos de un conjunto predefinido. Utiliza rangos específicos de una{" "}
-                  <a href='https://ptr-back-api.vercel.app/api/v1/fixedrange' target='_blank' rel='noopener noreferrer'>
-                     API
-                  </a>{" "}
-                  , con etiquetas fijas y feedback visual para una selección precisa y controlada.
-               </h2>
-            </div>
-            <ErrorBoundary fallback={<div className='errorBoundary'>Algo salió mal, vuelve a intentarlo de nuevo más tarde.</div>}>
-               <Suspense fallback={<Skeleton />}>
-                  <RangeWrapper isFixed={true} />
-               </Suspense>
-            </ErrorBoundary>
-         </Card>
-      </div>
+      <>
+         <Container className='flex justify-center items-center h-screen overflow-hidden'>
+            <Card className='max-w-xl mx-auto bg-card/30 backdrop-blur shadow-lg  dark:shadow-black'>
+               <CardHeader>
+                  <CardTitle className='mb-1'>Rango Normal</CardTitle>
+                  <CardDescription className='text-pretty'>
+                     Slider interactivo que permite la selección de valores dentro de un rango predefinido. Integra etiquetas, límites ajustables vía{" "}
+                     <a href='https://ptr-back-api.vercel.app/api/v1/normalrange' target='_blank' rel='noopener noreferrer'>
+                        API
+                     </a>
+                  </CardDescription>
+               </CardHeader>
+               <CardContent>
+                  <Suspense fallback={<SkeletonCard />}>
+                     <RangeWrapper isFixed={true} />
+                  </Suspense>
+               </CardContent>
+            </Card>
+            <AnimatedGridPattern
+               numSquares={100}
+               maxOpacity={0.1}
+               duration={3}
+               repeatDelay={1}
+               className={cn(
+                  "[mask-image:radial-gradient(750px_circle_at_center,white,transparent)]",
+                  "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12 -z-10 "
+               )}
+            />
+         </Container>
+      </>
    );
 };
 
-export default Exercise2;
+export default page;
