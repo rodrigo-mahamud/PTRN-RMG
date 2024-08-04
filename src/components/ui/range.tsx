@@ -7,7 +7,7 @@ import Label from "./label";
 import { RangeProps, DotRef, SelectedRange } from "@/types";
 import { useValueToPercent } from "@/hooks/useValueToPercent";
 import { usePercentToValue } from "@/hooks/usePercentToValue";
-import { Input } from "@/components/ui/input";
+import { Input } from "./input";
 
 interface ControlledRangeProps extends RangeProps {
    value?: SelectedRange;
@@ -107,6 +107,22 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
          [min, max, valueToPercent, handleDotChange]
       );
 
+      const handleIncrement = useCallback(
+         (dotIndex: 1 | 2) => () => {
+            const currentValue = percentToValue(dotIndex === 1 ? selectedRange.start : selectedRange.end);
+            handleInputChange(dotIndex)(currentValue + 1);
+         },
+         [percentToValue, selectedRange, handleInputChange]
+      );
+
+      const handleDecrement = useCallback(
+         (dotIndex: 1 | 2) => () => {
+            const currentValue = percentToValue(dotIndex === 1 ? selectedRange.start : selectedRange.end);
+            handleInputChange(dotIndex)(currentValue - 1);
+         },
+         [percentToValue, selectedRange, handleInputChange]
+      );
+
       useEffect(() => {
          if (value) {
             const start = valueToPercent(value.start);
@@ -171,26 +187,30 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                </div>
             </div>
 
-            <div className='flex w-full mt-6 justify-between'>
+            <div className='inputContainer'>
                <Input
                   type='number'
-                  className='w-16 text-xs pr-1.5'
+                  className='w-20 text-xs text-center pl-0 pr-8'
                   data-testid='input1'
-                  disabled={isFixed ? true : false}
+                  disabled={isFixed}
                   min={min}
                   max={max}
                   value={percentToValue(selectedRange.start).toFixed(isFixed ? 2 : 0)}
                   onChange={(e) => handleInputChange(1)(Number(e.target.value))}
+                  onIncrement={handleIncrement(1)}
+                  onDecrement={handleDecrement(1)}
                />
                <Input
                   type='number'
-                  className='w-16 text-xs pr-1.5'
+                  className='w-20 text-xs text-center pl-0 pr-8'
                   data-testid='input2'
-                  disabled={isFixed ? true : false}
+                  disabled={isFixed}
                   min={min}
                   max={max}
                   value={percentToValue(selectedRange.end).toFixed(isFixed ? 2 : 0)}
                   onChange={(e) => handleInputChange(2)(Number(e.target.value))}
+                  onIncrement={handleIncrement(2)}
+                  onDecrement={handleDecrement(2)}
                />
             </div>
          </div>
