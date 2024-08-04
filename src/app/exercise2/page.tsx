@@ -25,16 +25,6 @@ const page: React.FC = () => {
                   </Suspense>
                </CardContent>
             </Card>
-            <AnimatedGridPattern
-               numSquares={100}
-               maxOpacity={0.1}
-               duration={3}
-               repeatDelay={1}
-               className={cn(
-                  "[mask-image:radial-gradient(750px_circle_at_center,white,transparent)]",
-                  "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12 -z-10 "
-               )}
-            />
          </Container>
       </>
    );

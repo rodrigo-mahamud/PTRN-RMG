@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavDock } from "@/components/NavDock";
 import { ThemeProvider } from "@/components/ThemeProvider";
-
+import BlurFade from "@/components/magicui/blur-fade";
+import { cn } from "@/lib/utils";
+import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,12 +18,30 @@ export default function RootLayout({
 }: Readonly<{
    children: React.ReactNode;
 }>) {
+   const opacityVariant = {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 },
+   };
    return (
       <html lang='es'>
          <body className={inter.className}>
             <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
                {children}
                <NavDock></NavDock>
+               <BlurFade delay={0} variant={opacityVariant}>
+                  <div className='absolute top-0 h-screen w-full overflow-hidden -z-10'>
+                     <AnimatedGridPattern
+                        numSquares={30}
+                        maxOpacity={0.1}
+                        duration={3}
+                        repeatDelay={1}
+                        className={cn(
+                           "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
+                           "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12"
+                        )}
+                     />
+                  </div>
+               </BlurFade>
             </ThemeProvider>
          </body>
       </html>
