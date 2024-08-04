@@ -9,7 +9,7 @@ const page: React.FC = () => {
       <Container className='flex justify-center items-center h-screen'>
          <Card className='max-w-xl mx-auto'>
             <CardHeader>
-               <CardTitle>Rango Normal</CardTitle>
+               <CardTitle className='mb-1'>Rango Normal</CardTitle>
                <CardDescription className='text-pretty'>
                   Slider interactivo que permite la selección de valores dentro de un rango predefinido. Integra etiquetas, límites ajustables vía{" "}
                   <a href='https://ptr-back-api.vercel.app/api/v1/normalrange' target='_blank' rel='noopener noreferrer'>

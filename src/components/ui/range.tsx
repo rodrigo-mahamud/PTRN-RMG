@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import Tracks from "./tracks";
 import Dot from "./dot";
 import Bar from "./bar";
@@ -9,11 +9,17 @@ import { useValueToPercent } from "@/hooks/useValueToPercent";
 import { usePercentToValue } from "@/hooks/usePercentToValue";
 import { Input } from "@/components/ui/input";
 
-const Range: React.FC<RangeProps> = React.memo(
+interface ControlledRangeProps extends RangeProps {
+   value?: SelectedRange;
+   onRangeChange?: (range: SelectedRange) => void;
+}
+
+const Range: React.FC<ControlledRangeProps> = React.memo(
    ({
       min = 0,
       max = 100,
       defaultValue,
+      value,
       rangeValues,
       clickOnLabel,
       isFixed,
@@ -21,12 +27,15 @@ const Range: React.FC<RangeProps> = React.memo(
       selectedColor = "#3b82f6",
       unselectedColor = "#dae3f4",
       onChange,
+      onRangeChange,
       ...rest
    }) => {
-      const [selectedRange, setSelectedRange] = useState<SelectedRange>(() => ({
+      const [internalSelectedRange, setInternalSelectedRange] = useState<SelectedRange>(() => ({
          start: defaultValue?.min ?? min,
          end: defaultValue?.max ?? max,
       }));
+
+      const selectedRange = value || internalSelectedRange;
 
       const dot1Ref = useRef<DotRef>(null);
       const dot2Ref = useRef<DotRef>(null);
@@ -48,23 +57,29 @@ const Range: React.FC<RangeProps> = React.memo(
          (start: number, end: number) => {
             const newStart = percentToValue(start);
             const newEnd = percentToValue(end);
-            setSelectedRange({ start, end });
+            const newRange = { start, end };
+
+            if (!value) {
+               setInternalSelectedRange(newRange);
+            }
+
+            onRangeChange?.(newRange);
             onChange?.(newStart, newEnd);
          },
-         [percentToValue, onChange]
+         [percentToValue, onChange, onRangeChange, value]
       );
 
       const handleDotChange = useCallback(
-         (dotIndex: 1 | 2) => (value: number) => {
+         (dotIndex: 1 | 2) => (newValue: number) => {
             const otherDotValue = dotIndex === 1 ? selectedRange.end : selectedRange.start;
             const minDistancePercent = valueToPercent(minDistance);
 
             let newStart, newEnd;
             if (dotIndex === 1) {
-               newStart = Math.min(value, 100 - minDistancePercent);
+               newStart = Math.min(newValue, 100 - minDistancePercent);
                newEnd = Math.max(newStart + minDistancePercent, otherDotValue);
             } else {
-               newEnd = Math.max(value, minDistancePercent);
+               newEnd = Math.max(newValue, minDistancePercent);
                newStart = Math.min(newEnd - minDistancePercent, otherDotValue);
             }
 
@@ -92,13 +107,24 @@ const Range: React.FC<RangeProps> = React.memo(
          [min, max, valueToPercent, handleDotChange]
       );
 
-      React.useEffect(() => {
+      useEffect(() => {
+         if (value) {
+            const start = valueToPercent(value.start);
+            const end = valueToPercent(value.end);
+            dot1Ref.current?.update(start);
+            dot2Ref.current?.update(end);
+         }
+      }, [value, valueToPercent]);
+
+      useEffect(() => {
          const start = valueToPercent(defaultValue?.min ?? min);
          const end = valueToPercent(defaultValue?.max ?? max);
-         setSelectedRange({ start, end });
+         if (!value) {
+            setInternalSelectedRange({ start, end });
+         }
          dot1Ref.current?.update(start);
          dot2Ref.current?.update(end);
-      }, [min, max, defaultValue, valueToPercent]);
+      }, [min, max, defaultValue, valueToPercent, value]);
 
       const memoizedTracks = useMemo(() => isFixed && <Tracks values={rangeValues!.map(valueToPercent)} />, [isFixed, rangeValues, valueToPercent]);
 
@@ -145,10 +171,10 @@ const Range: React.FC<RangeProps> = React.memo(
                </div>
             </div>
 
-            <div className='inputContainer'>
+            <div className='flex w-full mt-6 justify-between'>
                <Input
                   type='number'
-                  className='w-20 text-xs '
+                  className='w-16 text-xs pr-1.5'
                   data-testid='input1'
                   disabled={isFixed ? true : false}
                   min={min}
@@ -158,7 +184,7 @@ const Range: React.FC<RangeProps> = React.memo(
                />
                <Input
                   type='number'
-                  className='w-20 text-xs '
+                  className='w-16 text-xs pr-1.5'
                   data-testid='input2'
                   disabled={isFixed ? true : false}
                   min={min}
