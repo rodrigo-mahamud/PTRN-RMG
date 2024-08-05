@@ -86,7 +86,7 @@ src/
 -  `RangeWrapper.tsx`: Maneja la obtención de datos y proporciona props a Range
 -  `Dot.tsx`: Punto interactivo para la selección de rango
 -  `Bar.tsx`: Representación visual del rango seleccionado
--  `getData.ts`: Maneja llamadas a la API con caché
+-  `getData.ts`: Maneja llamadas a la API con server actions
 
 ## Requisitos del Sistema
 
@@ -146,10 +146,6 @@ Navega a diferentes rutas para ver los selectores de rango en acción:
 -  **Tailwind CSS**: Empleado para estilos personalizados y responsivos.
 -  **Framer Motion**: Implementa animaciones suaves para una experiencia de usuario mejorada.
 -  **Modo Oscuro**: Soporte completo para temas claro y oscuro, mejorando la accesibilidad y preferencias del usuario.
-
-## Contribución
-
-¡Las contribuciones son bienvenidas! Por favor, siéntete libre de enviar un Pull Request.
 
 ## Licencia
 
