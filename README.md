@@ -1,4 +1,4 @@
-# Componentes de Selector de Rango Personalizados en Next.js
+# Selectores de Rango Personalizados en Next.js
 
 ## Visión General
 
@@ -29,6 +29,7 @@ Estos componentes proporcionan una forma interactiva y visualmente atractiva par
 
 ## Estructura del Proyecto
 
+```
 src/
 ├── app/
 │ ├── exercise1/
@@ -79,6 +80,7 @@ src/
 ├── routes.ts
 ├── Test.csv
 └── types.ts
+```
 
 ## Componentes Clave
 
