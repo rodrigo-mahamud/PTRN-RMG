@@ -1,9 +1,10 @@
 {
-   "name": "ptr-front",
-   "version": "0.1.0",
+   "name": "ptr-front-next",
+   "version": "1.1.0",
    "private": true,
    "scripts": {
-      "dev": "next dev -p 8080",
+      "dev": "next dev --turbo -p 8080",
+      "turbo": "next dev -p 8080",
       "build": "next build",
       "start": "next start",
       "lint": "next lint"
