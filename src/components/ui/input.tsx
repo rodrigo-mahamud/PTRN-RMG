@@ -8,7 +8,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
    onDecrement?: () => void;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, onIncrement, onDecrement, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, onIncrement, onDecrement, disabled, ...props }, ref) => {
    const isNumberType = type === "number";
 
    return (
@@ -16,15 +16,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
          <input
             type={type}
             className={cn(
-               "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-
+               "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none",
+               { "cursor-not-allowed opacity-50": disabled },
                className
             )}
             ref={ref}
             {...props}
          />
-         {isNumberType && (
-            <div className='absolute right-0 h-full flex flex-col w-8'>
+         {isNumberType ? (
+            <div className={cn("absolute right-0 h-full flex flex-col w-8", disabled && "pointer-events-none opacity-50")}>
                <Button className='border-b-0 rounded-l-none rounded-br-none p-0' variant={"outline"} onClick={onIncrement}>
                   <ChevronUp size={12} />
                </Button>
@@ -32,6 +32,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
                   <ChevronDown size={12} />
                </Button>
             </div>
+         ) : (
+            " "
          )}
       </div>
    );

@@ -14,7 +14,7 @@ interface BlurFadeProps {
    delay?: number;
    yOffset?: number;
    inView?: boolean;
-   inViewMargin?: string;
+   inViewMargin?: any;
    blur?: string;
 }
 
@@ -34,7 +34,7 @@ export default function BlurFade({
    const isInView = !inView || inViewResult;
    const defaultVariants: Variants = {
       hidden: { y: yOffset, opacity: 0, filter: `blur(${blur})` },
-      visible: { y: -yOffset, opacity: 1, filter: `blur(0px)`, transitionEnd: { y: "unset", opacity: "unset", filter: "unset" } },
+      visible: { y: 0, opacity: 1, filter: `blur(0px)` },
    };
    const combinedVariants = variant || defaultVariants;
    return (

@@ -26,8 +26,10 @@ export default function RootLayout({
       <html lang='es'>
          <body className={inter.className}>
             <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-               {children}
+               <main className=' flex h-screen w-full items-center justify-center overflow-hidden '>{children}</main>
+
                <NavDock></NavDock>
+
                <BlurFade delay={0} variant={opacityVariant}>
                   <div className='absolute top-0 h-screen w-full overflow-hidden -z-10'>
                      <AnimatedGridPattern
