@@ -43,13 +43,19 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
       const percentToValue = usePercentToValue({ min, max, rangeValues });
 
       const getNearestFixedValue = useCallback(
-         (percent: number) => {
+         (percent: number, otherDotPercent: number) => {
             if (!isFixed) return percent;
             const value = percentToValue(percent);
-            const nearestValue = rangeValues!.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
+            const otherValue = percentToValue(otherDotPercent);
+            const minDistanceValue = minDistance;
+
+            const validValues = rangeValues!.filter((v) => Math.abs(v - otherValue) >= minDistanceValue);
+
+            const nearestValue = validValues.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
+
             return valueToPercent(nearestValue);
          },
-         [isFixed, rangeValues, percentToValue, valueToPercent]
+         [isFixed, rangeValues, percentToValue, valueToPercent, minDistance]
       );
 
       const updateRange = useCallback(
@@ -70,16 +76,20 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
 
       const handleDotChange = useCallback(
          (dotIndex: 1 | 2) => (newValue: number) => {
-            const otherDotValue = dotIndex === 1 ? selectedRange.end : selectedRange.start;
             const minDistancePercent = valueToPercent(minDistance);
+            let newStart = selectedRange.start;
+            let newEnd = selectedRange.end;
 
-            let newStart, newEnd;
             if (dotIndex === 1) {
                newStart = Math.min(newValue, 100 - minDistancePercent);
-               newEnd = Math.max(newStart + minDistancePercent, otherDotValue);
+               if (newStart > newEnd - minDistancePercent) {
+                  newEnd = Math.min(newStart + minDistancePercent, 100);
+               }
             } else {
                newEnd = Math.max(newValue, minDistancePercent);
-               newStart = Math.min(newEnd - minDistancePercent, otherDotValue);
+               if (newEnd < newStart + minDistancePercent) {
+                  newStart = Math.max(newEnd - minDistancePercent, 0);
+               }
             }
 
             updateRange(newStart, newEnd);
@@ -91,19 +101,48 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
 
       const handleDotRelease = useCallback(
          (dotIndex: 1 | 2) => (value: number) => {
-            const nearestValue = getNearestFixedValue(value);
-            handleDotChange(dotIndex)(nearestValue);
+            let newStart = selectedRange.start;
+            let newEnd = selectedRange.end;
+
+            if (isFixed) {
+               if (dotIndex === 1) {
+                  newStart = getNearestFixedValue(value, newEnd);
+                  newEnd = getNearestFixedValue(newEnd, newStart);
+               } else {
+                  newEnd = getNearestFixedValue(value, newStart);
+                  newStart = getNearestFixedValue(newStart, newEnd);
+               }
+            } else {
+               if (dotIndex === 1) {
+                  newStart = value;
+               } else {
+                  newEnd = value;
+               }
+            }
+
+            const minDistancePercent = valueToPercent(minDistance);
+            if (newEnd - newStart < minDistancePercent) {
+               if (dotIndex === 1) {
+                  newEnd = Math.min(newStart + minDistancePercent, 100);
+               } else {
+                  newStart = Math.max(newEnd - minDistancePercent, 0);
+               }
+            }
+
+            updateRange(newStart, newEnd);
+            dot1Ref.current?.update(newStart);
+            dot2Ref.current?.update(newEnd);
          },
-         [getNearestFixedValue, handleDotChange]
+         [selectedRange, isFixed, getNearestFixedValue, valueToPercent, minDistance, updateRange]
       );
 
       const handleInputChange = useCallback(
          (dotIndex: 1 | 2) => (inputValue: number) => {
             const clampedValue = Math.max(min, Math.min(max, inputValue));
             const percent = valueToPercent(clampedValue);
-            handleDotChange(dotIndex)(percent);
+            handleDotRelease(dotIndex)(percent);
          },
-         [min, max, valueToPercent, handleDotChange]
+         [min, max, valueToPercent, handleDotRelease]
       );
 
       const handleIncrement = useCallback(
@@ -152,7 +191,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                         <Label
                            className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
                            text={min}
-                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(1)(0)}
+                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotRelease(1)(0)}
                            data-testid='range-label-min'
                         />
                         <div className='h-full w-full relative z-40 '>
@@ -178,7 +217,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                         <Label
                            className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
                            text={max}
-                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotChange(2)(100)}
+                           onClick={!clickOnLabel || isFixed ? undefined : () => handleDotRelease(2)(100)}
                            data-testid='range-label-max'
                         />
                      </div>
