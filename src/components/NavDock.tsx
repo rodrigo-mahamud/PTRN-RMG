@@ -14,7 +14,7 @@ export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export function NavDock() {
    return (
-      <div className='fixed flex bottom-8 w-full flex-col items-center justify-center '>
+      <div className='fixed flex bottom-4 md:bottom-8 w-full flex-col items-center justify-center '>
          <TooltipProvider>
             <BlurFade delay={0} yOffset={40} className='backdrop-blur-sm'>
                <Dock direction='middle' className='mt-0'>
@@ -29,7 +29,7 @@ export function NavDock() {
                                     <IconComponent className='h-[1.3rem] w-[1.3rem]' />
                                  </Link>
                               </TooltipTrigger>
-                              <TooltipContent>
+                              <TooltipContent className='mb-2'>
                                  <p>{item.label}</p>
                               </TooltipContent>
                            </Tooltip>
