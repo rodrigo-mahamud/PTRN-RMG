@@ -1,6 +1,6 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import Container from "@/components/ui/container";
-import { IconChevronCompactDown, IconChevronsDown } from "@tabler/icons-react";
+import { IconChevronsDown } from "@tabler/icons-react";
 
 export default function IndexPage() {
    return (
