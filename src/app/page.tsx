@@ -12,7 +12,7 @@ export default function IndexPage() {
          </BlurFade>
          <BlurFade delay={0.75}>
             <h2 className='z-10 whitespace-pre-wrap text-center text-base md:text-xl font-extralight text-black/75 dark:text-white/75 text-pretty'>
-               Componentes de rango personalizados en React con dos variantes: un rango numérico ajustable y un selector de valores predefinidos.
+               Componentes de rango personalizados NextJS con dos variantes: un rango numérico ajustable y un selector de valores predefinidos.
             </h2>
          </BlurFade>
          <BlurFade delay={1}>
