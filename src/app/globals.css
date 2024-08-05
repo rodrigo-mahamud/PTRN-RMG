@@ -76,16 +76,6 @@ input[type="number"]::-webkit-outer-spin-button {
    }
 }
 
-/* Layout Components */
-.container {
-   display: flex;
-   flex-direction: column;
-   max-width: 1300px;
-   padding: 0 5vw;
-   margin: 0 auto;
-   position: relative;
-}
-
 .exercise-container {
    display: flex;
    flex-direction: column;

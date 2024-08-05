@@ -5,7 +5,7 @@ const Bar = forwardRef<HTMLDivElement, BarProps>(({ selectedRange, selectedColor
    return (
       <div
          {...rest}
-         className='w-full h-6 border-y border-border overflow-hidden relative transition-custom group-hover:h-12 duration-300 delay-75 group-hover:opacity-75 opacity-100 dark:group-hover:opacity-100  dark:opacity-75'
+         className='w-full h-12 md:h-6 border-y border-border overflow-hidden relative transition-custom group-hover:h-12 duration-300 delay-75 group-hover:opacity-75 opacity-100 dark:group-hover:opacity-100  dark:opacity-75'
          ref={ref}
          style={{ background: selectedColor }}>
          <div

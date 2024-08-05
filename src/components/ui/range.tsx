@@ -26,7 +26,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
       minDistance = 0,
       selectedColor = "#3b82f6",
       onChange,
-      onRangeChange,
+
       ...rest
    }) => {
       const [internalSelectedRange, setInternalSelectedRange] = useState<SelectedRange>(() => ({
@@ -35,24 +35,18 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
       }));
 
       const selectedRange = value || internalSelectedRange;
-
       const dot1Ref = useRef<DotRef>(null);
       const dot2Ref = useRef<DotRef>(null);
-
       const valueToPercent = useValueToPercent({ min, max, rangeValues });
       const percentToValue = usePercentToValue({ min, max, rangeValues });
-
       const getNearestFixedValue = useCallback(
          (percent: number, otherDotPercent: number) => {
             if (!isFixed) return percent;
             const value = percentToValue(percent);
             const otherValue = percentToValue(otherDotPercent);
             const minDistanceValue = minDistance;
-
             const validValues = rangeValues!.filter((v) => Math.abs(v - otherValue) >= minDistanceValue);
-
             const nearestValue = validValues.reduce((prev, curr) => (Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev));
-
             return valueToPercent(nearestValue);
          },
          [isFixed, rangeValues, percentToValue, valueToPercent, minDistance]
@@ -68,35 +62,38 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                setInternalSelectedRange(newRange);
             }
 
-            onRangeChange?.(newRange);
             onChange?.(newStart, newEnd);
          },
-         [percentToValue, onChange, onRangeChange, value]
+         [percentToValue, onChange, value]
       );
 
       const handleDotChange = useCallback(
          (dotIndex: 1 | 2) => (newValue: number) => {
-            const minDistancePercent = valueToPercent(minDistance);
+            let minDistancePercent = valueToPercent(minDistance);
+
+            if (isFixed) {
+               minDistancePercent *= -1;
+            }
+
             let newStart = selectedRange.start;
             let newEnd = selectedRange.end;
 
             if (dotIndex === 1) {
-               newStart = Math.min(newValue, 100 - minDistancePercent);
-               if (newStart > newEnd - minDistancePercent) {
-                  newEnd = Math.min(newStart + minDistancePercent, 100);
+               newStart = Math.min(newValue, 100 - Math.abs(minDistancePercent));
+               if (newStart > newEnd - Math.abs(minDistancePercent)) {
+                  newEnd = Math.min(newStart + Math.abs(minDistancePercent), 100);
                }
             } else {
-               newEnd = Math.max(newValue, minDistancePercent);
-               if (newEnd < newStart + minDistancePercent) {
-                  newStart = Math.max(newEnd - minDistancePercent, 0);
+               newEnd = Math.max(newValue, Math.abs(minDistancePercent));
+               if (newEnd < newStart + Math.abs(minDistancePercent)) {
+                  newStart = Math.max(newEnd - Math.abs(minDistancePercent), 0);
                }
             }
-
             updateRange(newStart, newEnd);
             dot1Ref.current?.update(newStart);
             dot2Ref.current?.update(newEnd);
          },
-         [selectedRange, minDistance, updateRange, valueToPercent]
+         [selectedRange, minDistance, updateRange, valueToPercent, isFixed]
       );
 
       const handleDotRelease = useCallback(
@@ -187,14 +184,14 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
             <div className='flex flex-col gap-2 w-full'>
                <div className='flex items-center gap-8'>
                   <div className='size-full flex m-auto relative items-center group'>
-                     <div className='flex w-full'>
+                     <div className='flex w-full z-40 mb-4 md:mb-0'>
                         <Label
-                           className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
+                           className='w-12 md:w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-l-md'
                            text={min}
                            onClick={!clickOnLabel || isFixed ? undefined : () => handleDotRelease(1)(0)}
                            data-testid='range-label-min'
                         />
-                        <div className='h-full w-full relative z-40 '>
+                        <div className='h-full w-full relative '>
                            <div className='absolute w-full h-full flex items-center'>
                               <Dot
                                  value={selectedRange.start}
@@ -215,7 +212,7 @@ const Range: React.FC<ControlledRangeProps> = React.memo(
                            {memoizedTracks}
                         </div>
                         <Label
-                           className='w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
+                           className='w-12 md:w-20 flex justify-center text-black/50 group-hover:text-black dark:text-white/50 dark:group-hover:text-white group-hover:bg-accent/25 transition-colors items-center bg-accent/5 border border-border text-xs rounded-r-md'
                            text={max}
                            onClick={!clickOnLabel || isFixed ? undefined : () => handleDotRelease(2)(100)}
                            data-testid='range-label-max'
