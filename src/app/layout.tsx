@@ -5,19 +5,14 @@ import { NavDock } from "@/components/NavDock";
 import BlurFade from "@/components/magicui/blur-fade";
 import { cn } from "@/lib/utils";
 import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
-import dynamic from "next/dynamic";
-import { cookies } from "next/headers";
-
+import { ThemeProvider } from "@/components/ThemeProvider";
+import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
-
-const AppThemeProvider = dynamic(() => import("@/components/AppThemeProvider"), {
-   ssr: false,
-});
 
 export const metadata: Metadata = {
    title: {
       default: "PTRN-RMG",
-      template: "%s | Mi Aplicación",
+      template: "%s | PTRN-RMG",
    },
    description: "Prueba técnica realizada con Next.js",
    icons: {
@@ -34,15 +29,16 @@ export default function RootLayout({
       hidden: { opacity: 0 },
       visible: { opacity: 1 },
    };
-
-   const theme = cookies().get("__theme__")?.value || "system";
-
+   //suppressHydrationWarning: No es para nada recomendable, pero parece haber un error con ThemeProvider y el app router
+   //por el que recomiendan usarlo hasta que se solucione.
    return (
-      <html lang='es' className={theme} style={theme !== "system" ? { colorScheme: theme } : {}}>
+      <html lang='es' suppressHydrationWarning>
          <body className={inter.className}>
-            <AppThemeProvider attribute='class' defaultTheme={theme} enableSystem>
-               <main className='flex h-screen w-full items-center justify-center overflow-hidden'>{children}</main>
+            <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+               <main className=' flex h-screen w-full items-center justify-center overflow-hidden '>{children}</main>
+
                <NavDock></NavDock>
+
                <BlurFade delay={0} variant={opacityVariant}>
                   <div className='absolute top-0 h-screen w-full overflow-hidden -z-10'>
                      <AnimatedGridPattern
@@ -57,7 +53,7 @@ export default function RootLayout({
                      />
                   </div>
                </BlurFade>
-            </AppThemeProvider>
+            </ThemeProvider>
          </body>
       </html>
    );
