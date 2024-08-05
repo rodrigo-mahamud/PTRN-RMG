@@ -30,7 +30,7 @@ export default function RootLayout({
       visible: { opacity: 1 },
    };
    //suppressHydrationWarning: No es para nada recomendable, pero parece haber un error con ThemeProvider y el app router
-   //por el que recomiendan usarlo hasta que se solucione.
+   //por el que recomiendan usarlo hasta que se solucione. https://github.com/shadcn-ui/ui/issues/926#issuecomment-1634597958
    return (
       <html lang='es' suppressHydrationWarning>
          <body className={inter.className}>
@@ -47,7 +47,7 @@ export default function RootLayout({
                         duration={3}
                         repeatDelay={1}
                         className={cn(
-                           "[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
+                           "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)] md:[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]",
                            "inset-x-0 inset-y-[-50%] h-[200%] skew-y-12"
                         )}
                      />
